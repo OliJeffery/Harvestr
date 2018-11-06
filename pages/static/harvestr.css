@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:500,900|Roboto:300,400');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:500,700,900|Roboto:300,400');
 body {
 	font-family: 'Roboto', sans-serif;
 	font-size:14px;
@@ -39,23 +39,25 @@ img.profile_pic {
 
 .buttony {
 	display: inline-block;
-    background: burlywood;
-    /* color: #FFF; */
+    background: brown;
+	color:#fff;
+    text-decoration: none;
     text-transform: uppercase;
     padding: 1em;
     /* border-radius: .5em; */
     margin-right: 1em;
     font-family: 'Montserrat', sans-serif;
     /* font-size: 3em; */
-    /* font-weight: 900; */
+    font-weight: 700;
     transition: all .2s linear;
     cursor: pointer;
+    border-radius: 0 .5em 0 .5em;
 }
 
 
-.buttony:hover {
-	background: brown;
-	color:#fff;
+.buttony:hover {	
+	background: burlywood;
+    color: rgb(40,40,40);
 }
 
 .buttons {

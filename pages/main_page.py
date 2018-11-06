@@ -52,13 +52,23 @@ class HTMLPage:
 
 	def render_page(self):
 		if self.logged_in:
-			header = open('pages/static/header.html').read().format(self.profile['display_name'],self.profile['images'][0]['url'])
+			header = open('pages/static/header.html').read()
+			profile_pic = """
+							<div class='profile'>
+		  						<img class='profile_pic' alt='{}' src='{}' />
+		  					</div>
+		  				  """.format(self.profile['display_name'],self.profile['images'][0]['url'])
 			footer = open('pages/static/footer.html').read()
-			html = ''
+			html = f"""
+				{profile_pic}
+				<section id="content">
+        			<h2>Fetching latest reviews from Pitchfork.</h2>
+        		</section>
+			"""
 			today = datetime.today().strftime('%Y-%m-%d')
 			return f"{header}{html}{footer}"	
 		else:
-			header = open('pages/static/header.html').read().format('','')
+			header = open('pages/static/header.html').read()
 			footer = open('pages/static/footer.html').read()
 			html = "<a href='/login' class='buttony'>Log in via Spotify</a>"	
 			return f"{header}{html}{footer}"
