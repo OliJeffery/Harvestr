@@ -49,9 +49,10 @@ class SpotifyConnection:
 		response = requests.post(url,headers=headers,data=payload)
 		return response.json()
 
-	def add_tracks(self, playlist_id, tracks):
+	def add_track(self, playlist_id, track_id):
 		request = f"playlists/{playlist_id}/tracks"
 		url = self.base_url+request
 		headers = {'Authorization':f'Bearer {self.token}','Content-Type':'application/json'}
-		payload = '{"uris": ["'+'","'.join(tracks)+'"]}'
+		payload = f'{{"uris": ["spotify:track:{track_id}"]}}'
 		response = requests.post(url,headers=headers,data=payload)
+		print(response.json())

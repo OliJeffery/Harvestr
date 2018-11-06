@@ -31,9 +31,13 @@ def js_files(filename):
 def preview_albums(scythe, page_number):
 	return pages.album_harvestr.AlbumHarvestr().harvest(page_number)
 
-@APP.route('/harvestrs/<path:scythe>/<path:page_number>/harvest')
-def harvest_albums(scythe, page_number):
-	return pages.album_harvestr.AlbumHarvestr().harvest(page_number, True)
+@APP.route('/album/<path:album_name>/<path:artists>')
+def harvest_album(album_name, artists):
+	return pages.process_album.ProcessAlbum().find_album(album_name, artists)
+
+@APP.route('/track/<path:track_id>')
+def add_track_to_playlist(track_id):
+	return pages.process_album.ProcessAlbum().add_track_to_playlist(track_id)
 
 @APP.route('/login')
 def login_to_spotify():

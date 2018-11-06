@@ -35,6 +35,11 @@ img.profile_pic {
     margin-bottom: 1em;
     margin-right:3em;
     height:220px;
+    cursor: pointer;
+}
+
+.album:hover {
+    opacity: .8;
 }
 
 .buttony {
@@ -77,10 +82,28 @@ img.profile_pic {
 
 .modal {
 	background: rgba(250,60,60,.97);
-    padding: 2em;
+    padding: 1em 1.5em;
     border-radius: 0 .75em;
     border: 3px solid brown;
     position: fixed;
     color: wheat;
     display: none;
+    z-index: 666;
+}
+
+.tracks {
+    margin: 0;
+    padding: 0;
+}
+
+.track {
+    list-style: none;
+    /* padding: 0; */
+    border: 2px solid brown;
+    padding: .5em;
+    /* text-transform: uppercase; */
+    margin: 0 0 .5em 0;
+    font-size: .9em;
+    border-radius: .25em;
+    transition: background ease-in .2s;
 }
