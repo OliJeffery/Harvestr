@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:500,900|Roboto:300,400');
+body {
+	font-family: 'Roboto', sans-serif;
+	font-size:14px;
+	padding: .25em .5em;
+	color:rgb(40,40,40);
+	background: rgb(255, 241, 209)
+}
+h1 {
+	font-family: 'Montserrat', sans-serif;
+	font-size:3em;
+	font-weight: 900
+}
+
+h2 {
+	/*font-family: 'Montserrat', sans-serif;*/
+	font-size:1.25em;
+	font-weight: 400
+}
+
+img.profile_pic {
+	height: 4em;
+    width: 4em;
+    border-radius: 2em;
+    position: absolute;
+    right: 1em;
+    top: .75em
+}
+
+.album {
+	width: 150px;
+    /*background: aqua;*/
+    /*display: inline-block;*/
+    float: left;
+    margin-bottom: 1em;
+    margin-right:3em;
+    height:220px;
+}
+
+.buttony {
+	display: inline-block;
+    background: burlywood;
+    /* color: #FFF; */
+    text-transform: uppercase;
+    padding: 1em;
+    /* border-radius: .5em; */
+    margin-right: 1em;
+    font-family: 'Montserrat', sans-serif;
+    /* font-size: 3em; */
+    /* font-weight: 900; */
+    transition: all .2s linear;
+    cursor: pointer;
+}
+
+
+.buttony:hover {
+	background: brown;
+	color:#fff;
+}
+
+.buttons {
+	margin-bottom:1em;
+}
+
+.buttons:after {
+    content: '';
+    display: block;
+    clear: both;
+} 
+
+.left_floated {
+	float: left;
+	margin-right:2em;
+}

@@ -8,7 +8,6 @@ from spotify_classes.spotify_search import SpotifySearch
 from spotify_classes.spotify_user import SpotifyUser
 import pages
 import requests
-#from sick_decorators import html_page
 
 APP = Flask(__name__)
 
@@ -19,6 +18,18 @@ def home_page():
 @APP.route('/html/<path:filename>')
 def html_files(filename):
 	return send_from_directory('pages/static/', filename)
+
+@APP.route('/css/<path:filename>')
+def css_files(filename):
+	return send_from_directory('pages/static/', filename)
+
+@APP.route('/js/<path:filename>')
+def js_files(filename):
+	return send_from_directory('pages/static/', filename)
+
+@APP.route('/harvestrs/<path:scythe>/<path:page_number>')
+def harvestrs(scythe, page_number):
+	return pages.album_harvestr.AlbumHarvestr().harvest(page_number)
 
 @APP.route('/login')
 def login_to_spotify():

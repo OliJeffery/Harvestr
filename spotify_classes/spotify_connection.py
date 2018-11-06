@@ -41,9 +41,6 @@ class SpotifyConnection:
 		response=requests.post(url, data=body_params, auth = (self.client_id, self.client_secret))
 		return response.json()
 
-	def require_login(self):
-		return "<a href='/login'>You need to log in</a>"	
-
 	def create_playlist(self, user_id, playlist_name='HARVESTR', playlist_description='Created by HARVESTR, getting albums reviewed from Pitchfork.'):
 		request = f"users/{user_id}/playlists"
 		url = self.base_url+request

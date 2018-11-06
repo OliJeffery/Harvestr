@@ -1,17 +1,20 @@
 from spotify_classes.spotify_user import SpotifyUser
 from spotify_classes.spotify_search import SpotifySearch
 from mysql_classes.mysql_connection import Database
-from scythes.pitchfork import Pitchfork
 from datetime import datetime
 
 class HTMLPage:
 
 	def __init__(self):
 		self.user = SpotifyUser()
-		self.profile = self.user.my_profile()
-		self.mysql = Database().connection
-		self.check_for_user(self.profile['id'])
-		self.check_for_playlists(self.profile['id'])
+		try:
+			self.profile = self.user.my_profile()
+			self.mysql = Database().connection
+			self.check_for_user(self.profile['id'])
+			self.check_for_playlists(self.profile['id'])
+			self.logged_in = True
+		except KeyError:
+			self.logged_in = False
 
 	def check_for_user(self, spotify_id):
 		sql = f"SELECT `spotify_id` FROM `users` WHERE `spotify_id` = '{spotify_id}';"
@@ -36,12 +39,7 @@ class HTMLPage:
 			self.create_list()
 		else:
 			# Playlist exists in MySql, try to fetch it and create a new one if not fetchable.
-			"""print('Trying to fetch existing playlist.')
-			current_tracks = self.user.make_request(f'playlists/{self.playlist_id}')
-			print('==================================================================')
-			print(current_tracks['external_urls'])
-			print('==================================================================')
-			"""
+			print('Playlist exists.')
 
 	def create_list(self):
 		created_list = self.user.create_playlist(self.profile['id'])
@@ -53,27 +51,14 @@ class HTMLPage:
 		self.playlist_id = created_list['id']
 
 	def render_page(self):
-		header = open('pages/static/header.html').read().format(self.profile['display_name'],self.profile['images'][0]['url'])
-		footer = open('pages/static/footer.html').read()
-		html = ''
-		today = datetime.today().strftime('%Y-%m-%d')
-		albums = self.get_albums()
-		html+=self.process_albums(albums)
-		return f"{header}{html}{footer}"	
-
-	def get_albums(self):
-		pitchfork = Pitchfork()
-		url = pitchfork.base_url+'3'
-		return(pitchfork.find_albums(url))
-
-	def process_albums(self, albums):
-		html=''
-		for album in albums:
-			query = album['album_name'] + ' ' + ' '.join(album['artists'])
-			search = SpotifySearch(query, self.profile['id'])
-			html+=f"<p>Finding <b>{album['album_name']}</b> by <b>{' & '.join(album['artists'])}</b>.</p>"
-			try:
-				search.add_to_playlist(self.playlist_id)
-			except IndexError:
-				html+=f"Hmmm, we couldn't find <b>{album['album_name']}</b> by <b>{' & '.join(album['artists'])}</b>."
-		return html
+		if self.logged_in:
+			header = open('pages/static/header.html').read().format(self.profile['display_name'],self.profile['images'][0]['url'])
+			footer = open('pages/static/footer.html').read()
+			html = ''
+			today = datetime.today().strftime('%Y-%m-%d')
+			return f"{header}{html}{footer}"	
+		else:
+			header = open('pages/static/header.html').read().format('','')
+			footer = open('pages/static/footer.html').read()
+			html = "<a href='/login' class='buttony'>Log in via Spotify</a>"	
+			return f"{header}{html}{footer}"
