@@ -54,7 +54,6 @@ function add_album(albums, album_number, number_of_albums) {
 		  			console.log(confirmation);	  			
 		  			track.attr('style', 'background: brown');
 		  			i+=1;
-		  			console.log(i)
 		  			if(i==number_of_tracks) {
 		  				setTimeout(function(){ 				
 		  					$('.modal').data().tracksUploaded+=i;
