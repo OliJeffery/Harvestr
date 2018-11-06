@@ -20,7 +20,7 @@ class ProcessAlbum:
 	#	return html
 
 	def find_album(self, album_name, artists):
-		query = album_name + ' ' + artists
+		query = album_name + ' ' + artists.replace(' & ', ' ')
 		user_id = self.profile['id']
 		search = SpotifySearch(query, user_id)
 		total_tracks = 0
