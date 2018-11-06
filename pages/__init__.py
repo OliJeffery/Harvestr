@@ -1,0 +1,1 @@
+from pages import main_page
