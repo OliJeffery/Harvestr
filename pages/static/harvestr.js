@@ -34,6 +34,7 @@ function add_album(albums, album_number, number_of_albums) {
 		else {
 			album = $(albums[album_number])
 		}
+		if(album_number == 0) {$('.modal').data().tracksUploaded = 0;}
 		data = album.data();
 		$( ".modal" ).html('<p>Searching for <b>' + data.albumName +'</b> by <b>' + data.artists + '</b></p>').fadeIn(100)
 	    $.get( "/album/"+data.albumName+"/"+data.artists, function( data ) {
@@ -41,7 +42,7 @@ function add_album(albums, album_number, number_of_albums) {
 		  var tracks = $('.track')
 		  var number_of_tracks = tracks.length;
 		  if(number_of_tracks == 0) {
-		  	add_album(albums, album_number+1, number_of_albums)
+		  	setTimeout(function(){ add_album(albums, album_number+1, number_of_albums); }, 1500);		  	
 		  }
 		  var i = 0;
 		  tracks.each(
@@ -55,7 +56,10 @@ function add_album(albums, album_number, number_of_albums) {
 		  			i+=1;
 		  			console.log(i)
 		  			if(i==number_of_tracks) {
-		  				add_album(albums, album_number+1, number_of_albums)
+		  				setTimeout(function(){ 				
+		  					$('.modal').data().tracksUploaded+=i;
+		  					add_album(albums, album_number+1, number_of_albums);
+		  				}, 500);
 		  			}
 		  		});
 		  	}
@@ -63,7 +67,10 @@ function add_album(albums, album_number, number_of_albums) {
 		});
 	}
 	else {
-		$('.modal').fadeOut(5000);
+		$('.modal').text('Harvest complete. We added '+ $('.modal').data().tracksUploaded +' tracks to your HARVESTR playlist on Spotify.')
+		setTimeout(function(){ 				
+			$('.modal').fadeOut(2000);
+		}, 3000);		
 	}
 }
 
