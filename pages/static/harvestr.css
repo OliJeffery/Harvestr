@@ -74,3 +74,13 @@ img.profile_pic {
 	float: left;
 	margin-right:2em;
 }
+
+.modal {
+	background: rgba(250,60,60,.97);
+    padding: 2em;
+    border-radius: 0 .75em;
+    border: 3px solid brown;
+    position: fixed;
+    color: wheat;
+    display: none;
+}

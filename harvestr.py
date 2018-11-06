@@ -28,8 +28,12 @@ def js_files(filename):
 	return send_from_directory('pages/static/', filename)
 
 @APP.route('/harvestrs/<path:scythe>/<path:page_number>')
-def harvestrs(scythe, page_number):
+def preview_albums(scythe, page_number):
 	return pages.album_harvestr.AlbumHarvestr().harvest(page_number)
+
+@APP.route('/harvestrs/<path:scythe>/<path:page_number>/harvest')
+def harvest_albums(scythe, page_number):
+	return pages.album_harvestr.AlbumHarvestr().harvest(page_number, True)
 
 @APP.route('/login')
 def login_to_spotify():

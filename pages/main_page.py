@@ -1,5 +1,4 @@
 from spotify_classes.spotify_user import SpotifyUser
-from spotify_classes.spotify_search import SpotifySearch
 from mysql_classes.mysql_connection import Database
 from datetime import datetime
 
