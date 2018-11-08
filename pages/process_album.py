@@ -62,4 +62,4 @@ class ProcessAlbum:
 			self.user.add_track(self.playlist_id, track_id)
 			return f'Successfully added track {track_id}'
 		except Exception as error:
-			return error
+			return str(error)

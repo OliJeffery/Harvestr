@@ -10,6 +10,7 @@ $( document ).ready(
 $(document).on("click",".nextPage",function() {
     data = $(this).data();
     load_harvest(data.pageNumber, data.scythe)
+    window.history.pushState("", "", '/'+data.pageNumber);
 });
 
 function load_harvest(page_number, scythe) {
@@ -57,6 +58,44 @@ function add_album(albums, album_number, number_of_albums) {
 		  		var track = $(this);
 		  		var track_data = track.data();
 		  		var track_id = track_data.trackId;
+		  		$.ajax("/track/"+track_id, {
+				   statusCode: {
+				      201: function (response) {
+				        /*Success*/
+				        i+=1;
+				      },
+				      500: function (response) {
+				        i+=1;
+				      },
+				      403: function (response) {
+				        $('.modal').html('<p>You\'ve reached the maximum amount of tracks (10,000!) in your HARVESTR playlist. You\'ll need to delete some before adding any more tracks.</p>');
+				      }
+				   }, success: function (confirmation) {
+				   		i+=1;
+				      	console.log(confirmation);	  			
+		  				track.attr('style', 'background: brown');
+		  				if(i==number_of_tracks) {
+		  				setTimeout(function(){ 				
+		  					$('.modal').data().tracksUploaded+=i;
+		  					add_album(albums, album_number+1, number_of_albums);
+		  				}, 500);
+		  			}
+				   },
+				   error: function (confirmation) {
+				   		i+=1;
+				      	console.log(confirmation);	  			
+		  				track.attr('style', 'background: brown');
+		  				if(i==number_of_tracks) {
+		  				setTimeout(function(){ 				
+		  					$('.modal').data().tracksUploaded+=i;
+		  					add_album(albums, album_number+1, number_of_albums);
+		  				}, 500);
+		  			}
+				   },
+				});
+
+
+				/*
 		  		$.get( "/track/"+track_id, function(confirmation) {
 		  			console.log(confirmation);	  			
 		  			track.attr('style', 'background: brown');
@@ -67,7 +106,7 @@ function add_album(albums, album_number, number_of_albums) {
 		  					add_album(albums, album_number+1, number_of_albums);
 		  				}, 500);
 		  			}
-		  		});
+		  		});*/
 		  	}
 		  )
 		});
