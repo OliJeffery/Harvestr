@@ -1,4 +1,11 @@
-$( document ).ready(load_harvest(1, 'pitchfork'))
+$( document ).ready(
+
+	function() {
+		data = $('#content').data();
+		page_number = data.startingPageNumber;
+		load_harvest(page_number, 'pitchfork');
+	}
+)
 
 $(document).on("click",".nextPage",function() {
     data = $(this).data();

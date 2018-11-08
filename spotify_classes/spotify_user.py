@@ -12,7 +12,7 @@ class SpotifyUser(SpotifyConnection):
 		except KeyError:
 			self.require_login()
 
-	def login(self):
+	def login(self, referrer='http://127.0.0.1:5000'):
 		scope = "user-library-read "\
 		"user-library-modify "\
 		"playlist-read-private "\
@@ -23,6 +23,7 @@ class SpotifyUser(SpotifyConnection):
 		body_params = {'client_id' : self.client_id, 'scope' : scope, 'response_type' : 'code', 'redirect_uri' : 'http://127.0.0.1:5000/login_callback'}
 		url = 'https://accounts.spotify.com/authorize/?' + self.query_string(body_params)
 		response = make_response(self.redirect_to(url))
+		response.set_cookie('referrer', referrer)
 		return response
 
 	def get_access_token(self, code):
@@ -34,5 +35,19 @@ class SpotifyUser(SpotifyConnection):
 		url = 'https://accounts.spotify.com/api/token'
 		return self.post_request(url, body_params)
 
+	def refresh_access_token(self):
+		body_params = {	
+						'grant_type' : 'refresh_token', 
+						'refresh_token': params.cookies['refresh_token'] , 
+						'redirect_uri' : 'http://127.0.0.1:5000/refresh_callback'
+					  }		
+		url = 'https://accounts.spotify.com/api/token'
+		return self.post_request(url, body_params)
+
 	def my_profile(self):
 		return self.make_request('me')
+
+
+	def require_login(self):
+		response = make_response(self.redirect_to('/login'))
+	

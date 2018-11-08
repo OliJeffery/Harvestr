@@ -49,7 +49,7 @@ class HTMLPage:
 		self.mysql.commit()
 		self.playlist_id = created_list['id']
 
-	def render_page(self):
+	def render_page(self, page_number=1):
 		if self.logged_in:
 			header = open('pages/static/header.html').read()
 			profile_pic = """
@@ -60,7 +60,7 @@ class HTMLPage:
 			footer = open('pages/static/footer.html').read()
 			html = f"""
 				{profile_pic}
-				<section id="content">
+				<section id="content" data-starting-page-number="{page_number}">
         			<h2>Fetching latest reviews from Pitchfork.</h2>
         		</section>
 			"""

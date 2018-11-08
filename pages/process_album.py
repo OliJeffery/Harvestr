@@ -2,18 +2,34 @@ from spotify_classes.spotify_search import SpotifySearch
 from spotify_classes.spotify_user import SpotifyUser
 from mysql_classes.mysql_connection import Database
 from datetime import datetime
+from flask import request as params
+from flask import make_response
+from flask import redirect
 
 class ProcessAlbum:
 
 	def __init__(self):
-		self.user = SpotifyUser()
-		self.profile = self.user.my_profile()
-		self.mysql = Database().connection
-		sql = f"SELECT `main_playlist_id`,`current_releases_only` FROM `users` WHERE `spotify_id` = '{self.profile['id']}';"
-		user_info = self.mysql.get_rows(self.mysql.cmd_query(sql))[0]
-		self.playlist_id = user_info[0][0]
-		self.current_releases_only = user_info[0][1]
-		self.year = datetime.today().strftime('%Y')
+		try:
+			self.user = SpotifyUser()
+			self.profile = self.user.my_profile()
+			self.mysql = Database().connection
+			sql = f"SELECT `main_playlist_id`,`current_releases_only` FROM `users` WHERE `spotify_id` = '{self.profile['id']}';"
+			user_info = self.mysql.get_rows(self.mysql.cmd_query(sql))[0]
+			self.playlist_id = user_info[0][0]
+			self.current_releases_only = user_info[0][1]
+			self.year = datetime.today().strftime('%Y')
+		except KeyError:
+			self.refresh_token()
+
+	def redirect_to(self, url):
+		return redirect(url, code=302)
+
+	def refresh_token(self):
+		referrer = params.url
+		print(f'Referrer is {referrer}')
+		response = make_response(self.redirect_to('/refresh_token'))
+		response.set_cookie('referrer', referrer)
+		return response	
 
 	def find_album(self, album_name, artists):
 		query = album_name + ' ' + artists.replace(' & ', ' ')
