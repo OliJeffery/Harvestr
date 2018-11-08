@@ -32,7 +32,7 @@ class ProcessAlbum:
 		return response	
 
 	def find_album(self, album_name, artists):
-		query = album_name + ' ' + artists.replace(' & ', ' ')
+		query = (album_name + ' ' + artists.replace(' & ', ' ')).replace(' EP', '')
 		user_id = self.profile['id']
 		search = SpotifySearch(query, user_id)
 		total_tracks = 0
@@ -58,5 +58,8 @@ class ProcessAlbum:
 		return html
 
 	def add_track_to_playlist(self, track_id):
-		self.user.add_track(self.playlist_id, track_id)
-		return f'Successfully added track {track_id}'
+		try:
+			self.user.add_track(self.playlist_id, track_id)
+			return f'Successfully added track {track_id}'
+		except Exception as error:
+			return error
