@@ -4,7 +4,7 @@ import json
 class Database:
 
 	def __init__(self):
-		with open('../mysql_credentials.json') as mysql_credentials:
+		with open('mysql_credentials.json') as mysql_credentials:
 			json_credentials = json.loads(mysql_credentials.read())
 			self.connection = mysql.connector.connect(
 			  		host=json_credentials['host'],

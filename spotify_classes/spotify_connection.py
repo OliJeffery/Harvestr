@@ -10,7 +10,7 @@ import json
 class SpotifyConnection:
 
 	def __init__(self):
-		with open('../spotify_credentials.json') as credentials:
+		with open('spotify_credentials.json') as credentials:
 			json_credentials = json.loads(credentials.read())
 			#self.auth = str(base64.b64encode(bytes(json_credentials['client_id']+':'+json_credentials['client_secret'], 'utf-8'))).split("'")[1]
 			self.client_id = json_credentials['client_id']

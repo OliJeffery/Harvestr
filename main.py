@@ -9,47 +9,50 @@ from spotify_classes.spotify_user import SpotifyUser
 import pages
 import requests
 
-APP = Flask(__name__)
+app = Flask(__name__)
 
-@APP.route('/')
+@app.route('/')
 def home_page():
-	return pages.main_page.HTMLPage().render_page()
+	try:
+		return pages.main_page.HTMLPage().render_page()
+	except Exception as error:
+		return str(error)
 
-@APP.route('/<path:page_number>')
+@app.route('/<path:page_number>')
 def specify_page(page_number):
 	return pages.main_page.HTMLPage().render_page(page_number)
 
-@APP.route('/html/<path:filename>')
+@app.route('/html/<path:filename>')
 def html_files(filename):
 	return send_from_directory('pages/static/', filename)
 
-@APP.route('/css/<path:filename>')
+@app.route('/css/<path:filename>')
 def css_files(filename):
 	return send_from_directory('pages/static/', filename)
 
-@APP.route('/js/<path:filename>')
+@app.route('/js/<path:filename>')
 def js_files(filename):
 	return send_from_directory('pages/static/', filename)
 
-@APP.route('/harvestrs/<path:scythe>/<path:page_number>')
+@app.route('/harvestrs/<path:scythe>/<path:page_number>')
 def preview_albums(scythe, page_number):
 	return pages.album_harvestr.AlbumHarvestr().harvest(page_number)
 
-@APP.route('/album/<path:album_name>/<path:artists>')
+@app.route('/album/<path:album_name>/<path:artists>')
 def harvest_album(album_name, artists):
 	return pages.process_album.ProcessAlbum().find_album(album_name, artists)
 
-@APP.route('/track/<path:track_id>')
+@app.route('/track/<path:track_id>')
 def add_track_to_playlist(track_id):
 	return pages.process_album.ProcessAlbum().add_track_to_playlist(track_id)
 
-@APP.route('/login')
+@app.route('/login')
 def login_to_spotify():
 	referrer = params.referrer 
 	user = SpotifyUser()
 	return user.login(referrer)
 
-@APP.route('/login_callback')
+@app.route('/login_callback')
 def login_callback():
 	code = params.args['code']
 	user = SpotifyUser()
@@ -64,7 +67,7 @@ def login_callback():
 	response.set_cookie('refresh_token', refresh_token)
 	return response
 
-@APP.route('/refresh_token')
+@app.route('/refresh_token')
 def refresh_callback():
 	user = SpotifyUser()
 	token_info = user.refresh_access_token()
