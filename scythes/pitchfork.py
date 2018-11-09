@@ -31,14 +31,3 @@ class Pitchfork:
 			spotify_info['album_cover'] = album.select('.review__artwork img')
 			returned_albums.append(spotify_info)
 		return returned_albums
-
-
-def main():
-	""" Test run with defaults if not called """
-	test = PitchforkScythe()
-	url = test.base_url+'1'
-	test.find_albums(url)
-
-if __name__ == '__main__':
-	main()
-
