@@ -3,11 +3,12 @@ from flask import Flask
 from flask import request as params
 from flask import send_from_directory
 from flask import make_response
-#from spotify_classes.spotify_connection import SpotifyConnection
 from spotify_classes.spotify_search import SpotifySearch
 from spotify_classes.spotify_user import SpotifyUser
 import pages
 import requests
+from sql_test import connection_test
+import json
 
 app = Flask(__name__)
 
@@ -15,6 +16,19 @@ app = Flask(__name__)
 def home_page():
 	try:
 		return pages.main_page.HTMLPage().render_page()
+	except Exception as error:
+		return str(error)
+
+@app.route('/sql_test')
+def sql_test():
+	try:
+		with open('mysql_credentials.json') as mysql_credentials:
+			json_credentials = json.loads(mysql_credentials.read())
+			db_connection_name = json_credentials['host']
+			db_user = json_credentials['user']
+			db_password = json_credentials['passwd']
+			db_name = json_credentials['database']
+			return connection_test(db_connection_name, db_user, db_password, db_name)
 	except Exception as error:
 		return str(error)
 

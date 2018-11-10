@@ -1,5 +1,4 @@
 $( document ).ready(
-
 	function() {
 		data = $('#content').data();
 		page_number = data.startingPageNumber;

@@ -12,7 +12,7 @@ class SpotifyUser(SpotifyConnection):
 		except KeyError:
 			self.require_login()
 
-	def login(self, referrer='http://127.0.0.1:5000'):
+	def login(self, referrer='https://harvestr101.appspot.com/'):
 		scope = "user-library-read "\
 		"user-library-modify "\
 		"playlist-read-private "\
@@ -20,7 +20,7 @@ class SpotifyUser(SpotifyConnection):
 		"playlist-modify-private "\
 		"user-read-recently-played "\
 		"user-top-read"
-		body_params = {'client_id' : self.client_id, 'scope' : scope, 'response_type' : 'code', 'redirect_uri' : 'http://127.0.0.1:5000/login_callback'}
+		body_params = {'client_id' : self.client_id, 'scope' : scope, 'response_type' : 'code', 'redirect_uri' : 'https://harvestr101.appspot.com/login_callback'}
 		url = 'https://accounts.spotify.com/authorize/?' + self.query_string(body_params)
 		response = make_response(self.redirect_to(url))
 		response.set_cookie('referrer', referrer)
@@ -30,7 +30,7 @@ class SpotifyUser(SpotifyConnection):
 		body_params = {	
 						'grant_type' : 'authorization_code', 
 						'code': code , 
-						'redirect_uri' : 'http://127.0.0.1:5000/login_callback'
+						'redirect_uri' : 'https://harvestr101.appspot.com/login_callback'
 					  }		
 		url = 'https://accounts.spotify.com/api/token'
 		return self.post_request(url, body_params)
@@ -39,7 +39,7 @@ class SpotifyUser(SpotifyConnection):
 		body_params = {	
 						'grant_type' : 'refresh_token', 
 						'refresh_token': params.cookies['refresh_token'] , 
-						'redirect_uri' : 'http://127.0.0.1:5000/refresh_callback'
+						'redirect_uri' : 'https://harvestr101.appspot.com/refresh_callback'
 					  }		
 		url = 'https://accounts.spotify.com/api/token'
 		return self.post_request(url, body_params)

@@ -1,6 +1,6 @@
 from flask import request as params
 from .spotify_connection import SpotifyConnection
-from mysql_classes.mysql_connection import Database
+from mysql_classes.pymysql_connection import Database
 from datetime import datetime
 
 class SpotifySearch(SpotifyConnection):
@@ -10,7 +10,6 @@ class SpotifySearch(SpotifyConnection):
 		self.code = None
 		self.user_id = user_id
 		self.token = params.cookies['access_token']
-		self.mysql = Database().connection
 		self.search(query)
 		
 	def search(self, query, limit='1', search_type='album', market='GB'):
@@ -26,12 +25,10 @@ class SpotifySearch(SpotifyConnection):
 
 	def check_if_processed(self):
 		sql = f"SELECT `album_id` FROM `processed_albums` WHERE `spotify_id` = '{self.user_id}' AND `album_id` = '{self.album_id}';"
-		already_processed = len(self.mysql.get_rows(self.mysql.cmd_query(sql))[0])
+		already_processed = len(Database().query(sql))
 		if already_processed == 0:
 			query = 'INSERT INTO `processed_albums` (`spotify_id`,`album_id`,`processed`) VALUES(%s,%s,%s);'
 			args = [self.user_id, self.album_id, datetime.today().strftime('%Y-%m-%d %H:%M:%S')]
-			cursor = self.mysql.cursor()
-			cursor.execute(query, args)
-			self.mysql.commit()
-		return already_processed
+			Database().update(query, args)
+		return already_processed 
 		

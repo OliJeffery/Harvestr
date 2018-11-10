@@ -1,6 +1,6 @@
 from spotify_classes.spotify_search import SpotifySearch
 from spotify_classes.spotify_user import SpotifyUser
-from mysql_classes.mysql_connection import Database
+from mysql_classes.pymysql_connection import Database
 from datetime import datetime
 from flask import request as params
 from flask import make_response
@@ -12,11 +12,11 @@ class ProcessAlbum:
 		try:
 			self.user = SpotifyUser()
 			self.profile = self.user.my_profile()
-			self.mysql = Database().connection
 			sql = f"SELECT `main_playlist_id`,`current_releases_only` FROM `users` WHERE `spotify_id` = '{self.profile['id']}';"
-			user_info = self.mysql.get_rows(self.mysql.cmd_query(sql))[0]
-			self.playlist_id = user_info[0][0]
-			self.current_releases_only = user_info[0][1]
+			user_info = Database().query(sql)
+			print(f'USER INFO\n==========================\n{user_info}')
+			self.playlist_id = user_info[0]['main_playlist_id']
+			self.current_releases_only = user_info[0]['current_releases_only'] 
 			self.year = datetime.today().strftime('%Y')
 		except KeyError:
 			self.refresh_token()
@@ -38,6 +38,11 @@ class ProcessAlbum:
 		total_tracks = 0
 		try:
 			search.get_album_data()
+			print(f"Playlist ID: {self.playlist_id}")
+			print(f"Release date: {search.release_date}")
+			print(f"Album id: {search.album_id}")
+			print(f"Current releases only: {self.current_releases_only}")
+			print(f"Current year: {self.year}")
 			if self.current_releases_only == 1 and self.year not in search.release_date:
 				html = "<p class='skip_this'>This isn't a current release, so we're skipping it.</p>"
 			else:
