@@ -72,3 +72,15 @@ def refresh_callback():
 	response.set_cookie('access_token', access_token)
 	response.set_cookie('expiration', str(expiration))
 	return response
+
+@app.route('/css/<path:filename>')
+def css_files(filename):
+	return send_from_directory('pages/static/', filename)
+
+@app.route('/js/<path:filename>')
+def js_files(filename):
+	return send_from_directory('pages/static/', filename)
+
+@app.route('/img/<path:filename>')
+def img_files(filename):
+	return send_from_directory('pages/static/', filename)

@@ -131,6 +131,24 @@ img.profile_pic {
     margin-top: 6em;
 }
 
+.hidden_buttons .buttony {
+    width: 1.5em;
+    height: 1em;
+    text-align: center;
+    font-size: 2.5em;
+    padding: 0.15em 0 0.35em;
+    border-radius: 1em;
+    background:rgba(165,42,42,.9);
+    margin-right:.5em;
+}
+
+.hidden_buttons {
+    position: fixed;
+    display: none;
+    right:1em;
+    bottom:2em;
+}
+
 @media only screen and (max-width: 440px) {
     .left_floated {
         margin-right:1em;

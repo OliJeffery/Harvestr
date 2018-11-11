@@ -17,6 +17,7 @@ function load_harvest(page_number, scythe) {
 	  $( "#content" ).fadeOut(100, function() {
 	  	$( "#content" ).html( data ).fadeIn(100)
 	  });
+	  window.scrollTo(0, 0);
 	  console.log('Page ' + page_number + ' of ' + scythe + ' loaded successfully.')
 	});
 }
@@ -121,5 +122,30 @@ function add_album(albums, album_number, number_of_albums) {
 $(document).on("click",".modal",function() {
 	$(this).fadeOut(200);
 });
+
+var buttonsInView = true
+var buttonBorder = 55
+
+//jQuery
+$(window).on('DOMContentLoaded load resize scroll', function() {
+	document.addEventListener('scroll', function (event) {
+		
+		if($('.fixed_buttons')[0].getBoundingClientRect().y < buttonBorder && buttonsInView == true) {
+			console.log('Buttons out of view');
+			$('.hidden_buttons').fadeIn(175);
+			buttonsInView = false;
+		}
+
+		if($('.fixed_buttons')[0].getBoundingClientRect().y >= buttonBorder && buttonsInView == false) {
+			console.log('Buttons back in view');
+			buttonsInView = true;
+			$('.hidden_buttons').fadeOut(150);
+		}
+
+
+		})
+	}
+); 
+
 
 console.log('Only sick music makes money today.')

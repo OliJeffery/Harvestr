@@ -24,6 +24,12 @@ class AlbumHarvestr:
 							{album['album_cover'][0]}
 							<b>{album['album_name']}</b> by <b>{' & '.join(album['artists'])}</b> 
 						</div>"""
+			html+=f"""
+					<div class='hidden_buttons'>
+						<a class='buttony nextPage' data-page-number='{int(page_number)+1}' data-scythe='pitchfork'>></a>
+						<a class='buttony addToPlaylist' data-page-number='{page_number}' data-scythe='pitchfork'>+</a>
+					</div>
+			"""
 			return html
 
 	def get_albums(self, page_number):
