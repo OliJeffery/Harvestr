@@ -34,22 +34,21 @@ class HTMLPage:
 		spotify_id = self.profile['id']
 		sql = f"SELECT `main_playlist_id` FROM `users` WHERE `spotify_id` = '{spotify_id}';"
 		playlist_check = Database().query(sql)
-		try:
-			if len(playlist_check) != 0:
-				self.playlist_id = playlist_check[0]['main_playlist_id']
-			else:
-				# Playlist doesn't exist, create one.
-				print('This user doesn\'t have a HARVESTR playlist set up yet.')
-				self.create_list()
-		except:
-			return str(Database().query(sql))
-
+		self.playlist_id = playlist_check[0]['main_playlist_id']
+		if self.playlist_id is None:
+			# Playlist doesn't exist, create one.
+			print('This user doesn\'t have a HARVESTR playlist set up yet.')
+			self.create_list()
+		else:
+			print(f'PLAYLIST ID: {self.playlist_id}')
+		
 	def create_list(self):
 		created_list = self.user.create_playlist(self.profile['id'])
 		query = "UPDATE `users` SET `main_playlist_id` = %s WHERE `spotify_id` = %s; "
 		args = [created_list['id'],self.profile['id']]
 		Database().update(query, args)
 		self.playlist_id = created_list['id']
+		print(f'CREATED NEW PLAYLIST: {self.playlist_id}')
 
 	def render_page(self, page_number=1):
 		if self.logged_in:
@@ -57,7 +56,7 @@ class HTMLPage:
 			try:
 				profile_image = self.profile['images'][0]['url']
 			except IndexError:
-				profile_image = '/img/harvestr.png'
+				profile_image = '/img/generic_profile.jpg'
 			profile_pic = """
 							<div class='profile'>
 		  						<img class='profile_pic' alt='{}' src='{}' />
