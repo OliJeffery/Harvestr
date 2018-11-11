@@ -19,33 +19,12 @@ def home_page():
 	except Exception as error:
 		return str(error)
 
-@app.route('/sql_test')
-def sql_test():
-	try:
-		with open('mysql_credentials.json') as mysql_credentials:
-			json_credentials = json.loads(mysql_credentials.read())
-			db_connection_name = json_credentials['host']
-			db_user = json_credentials['user']
-			db_password = json_credentials['passwd']
-			db_name = json_credentials['database']
-			return connection_test(db_connection_name, db_user, db_password, db_name)
-	except Exception as error:
-		return str(error)
-
 @app.route('/<path:page_number>')
 def specify_page(page_number):
 	return pages.main_page.HTMLPage().render_page(page_number)
 
 @app.route('/html/<path:filename>')
 def html_files(filename):
-	return send_from_directory('pages/static/', filename)
-
-@app.route('/css/<path:filename>')
-def css_files(filename):
-	return send_from_directory('pages/static/', filename)
-
-@app.route('/js/<path:filename>')
-def js_files(filename):
 	return send_from_directory('pages/static/', filename)
 
 @app.route('/harvestrs/<path:scythe>/<path:page_number>')

@@ -6,10 +6,22 @@ body {
 	color:rgb(40,40,40);
 	background: rgb(255, 241, 209)
 }
+
+header {
+    background: brown;
+    color:wheat;
+    margin: -1em;
+    padding: 1em;
+    position: fixed;
+    width:100%;
+    z-index: 666;
+}
+
 h1 {
 	font-family: 'Montserrat', sans-serif;
 	font-size:3em;
-	font-weight: 900
+	font-weight: 900;
+    margin:0 .125em;
 }
 
 h2 {
@@ -22,9 +34,10 @@ img.profile_pic {
 	height: 4em;
     width: 4em;
     border-radius: 2em;
-    position: absolute;
+    position: fixed;
     right: 1em;
-    top: .75em
+    top: .75em;
+    z-index: 666;
 }
 
 .album {
@@ -75,6 +88,10 @@ img.profile_pic {
     clear: both;
 } 
 
+#content {
+    margin-top:6em;
+}
+
 .left_floated {
 	float: left;
 	margin-right:2em;
@@ -89,6 +106,8 @@ img.profile_pic {
     color: wheat;
     display: none;
     z-index: 666;
+    margin-right: 1em;
+    margin-top: 6em;
 }
 
 .tracks {
@@ -106,4 +125,57 @@ img.profile_pic {
     font-size: .9em;
     border-radius: .25em;
     transition: background ease-in .2s;
+}
+
+.login {
+    margin-top: 6em;
+}
+
+@media only screen and (max-width: 440px) {
+    .left_floated {
+        margin-right:1em;
+        font-size: 1em;
+    }
+    .buttony {
+        font-size: .8em;
+        margin-right:.5em;
+        padding:.75em;
+    }
+    .album {
+        width:130px;
+    }
+    .album img {
+        width:150px;
+    }
+    .login {
+        margin-top:10em;
+    }
+}   
+
+@media only screen and (max-width: 375px) {
+    .album {
+        width:120px;
+    }
+    .album img {
+        width:135px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    h1 {
+        padding:.2em 0;
+        font-size: 2.5em;
+    }
+
+    .album {
+        width:103px;
+    }
+    .album img {
+        width:125px;
+    }
+    .buttony {
+        font-size: .7em;
+        margin-right:.25em;
+        padding:.75em;
+    }
 }

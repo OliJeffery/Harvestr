@@ -10,13 +10,14 @@ class AlbumHarvestr:
 		if harvest:
 			return self.process_albums()
 		else:
-			html = f'<h2 class="left_floated">Page {page_number} of Pitchfork</h2>'
-			html += f"""
-				<div class='buttons'>
-					<a class='buttony nextPage' data-page-number='{int(page_number)+1}' data-scythe='pitchfork'>More</a>
-					<a class='buttony addToPlaylist' data-page-number='{page_number}' data-scythe='pitchfork'>Harvest All</a>
+			html = f"""
+				<div class="fixed_buttons">
+					<h2 class="left_floated">Page {page_number} of Pitchfork</h2>
+					<div class='buttons'>
+						<a class='buttony nextPage' data-page-number='{int(page_number)+1}' data-scythe='pitchfork'>More</a>
+						<a class='buttony addToPlaylist' data-page-number='{page_number}' data-scythe='pitchfork'>Harvest All</a>
+					</div>
 				</div>
-
 			"""			
 			for album in self.albums:
 				html += f"""<div class='album' data-album-name='{album['album_name']}' data-artists='{' & '.join(album['artists'])}' >

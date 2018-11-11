@@ -1,1 +1,11 @@
 runtime: python37
+
+handlers:
+- url: /css
+  static_dir: pages/static
+
+- url: /js
+  static_dir: pages/static
+
+- url: /img
+  static_dir: pages/static

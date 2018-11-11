@@ -54,11 +54,15 @@ class HTMLPage:
 	def render_page(self, page_number=1):
 		if self.logged_in:
 			header = open('pages/static/header.html').read()
+			try:
+				profile_image = self.profile['images'][0]['url']
+			except IndexError:
+				profile_image = '/img/harvestr.png'
 			profile_pic = """
 							<div class='profile'>
 		  						<img class='profile_pic' alt='{}' src='{}' />
 		  					</div>
-		  				  """.format(self.profile['display_name'],self.profile['images'][0]['url'])
+		  				  """.format(self.profile['display_name'],profile_image)
 			footer = open('pages/static/footer.html').read()
 			html = f"""
 				{profile_pic}
@@ -71,5 +75,5 @@ class HTMLPage:
 		else:
 			header = open('pages/static/header.html').read()
 			footer = open('pages/static/footer.html').read()
-			html = "<a href='/login' class='buttony'>Log in via Spotify</a>"	
+			html = "<a href='/login' class='buttony login'>Log in via Spotify</a>"	
 			return f"{header}{html}{footer}"
