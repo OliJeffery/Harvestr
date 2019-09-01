@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:500,700,900|Roboto:300,400');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:500,700,900|Roboto:300,400|Seymour+One');
 body {
 	font-family: 'Roboto', sans-serif;
 	font-size:14px;
@@ -17,11 +17,19 @@ header {
     z-index: 666;
 }
 
-h1 {
+h1, .settings h2 {
 	font-family: 'Montserrat', sans-serif;
 	font-size:3em;
 	font-weight: 900;
     margin:0 .125em;
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+.settings h2 {
+    font-size: 2.5em;
+    display: block;
+    margin-bottom: 1em;
 }
 
 h2 {
@@ -38,6 +46,11 @@ img.profile_pic {
     right: 1em;
     top: .75em;
     z-index: 666;
+    cursor: pointer;
+}
+
+img.profile_pic:hover {
+    opacity: .7;
 }
 
 .album {
@@ -97,7 +110,7 @@ img.profile_pic {
 	margin-right:2em;
 }
 
-.modal {
+.modal, .settings {
 	background: rgba(250,60,60,.97);
     padding: 1em 1.5em;
     border-radius: 0 .75em;
@@ -109,6 +122,16 @@ img.profile_pic {
     margin-right: 1em;
     margin-top: 6em;
 }
+
+.settings {
+    margin: -1em;
+    border-radius: 0;
+    height: 100%;
+    border-width: 0 5px 0 0;
+    padding: 2em;
+    z-index: 667;
+}
+
 
 .tracks {
     margin: 0;
@@ -149,6 +172,15 @@ img.profile_pic {
     bottom:2em;
 }
 
+.hamburger {
+    font-family: 'Seymour One', sans-serif; 
+    font-size: 3em;
+    font-weight: 900;
+    margin: 0 .125em;
+    display: inline-block;
+    cursor: pointer;
+}
+
 @media only screen and (max-width: 440px) {
     .left_floated {
         margin-right:1em;
@@ -183,6 +215,7 @@ img.profile_pic {
     h1 {
         padding:.2em 0;
         font-size: 2.5em;
+        display: inline-block;
     }
 
     .album {

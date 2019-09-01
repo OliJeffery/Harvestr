@@ -2,7 +2,7 @@ $( document ).ready(
 	function() {
 		data = $('#content').data();
 		page_number = data.startingPageNumber;
-		load_harvest(page_number, 'pitchfork');
+		load_harvest(page_number, 'TheQuietus');
 	}
 )
 
@@ -12,8 +12,8 @@ $(document).on("click",".nextPage",function() {
     window.history.pushState("", "", '/'+data.pageNumber);
 });
 
-function load_harvest(page_number, scythe) {
-	$.get( "/harvestrs/"+scythe+"/"+page_number, function( data ) {
+function load_harvest(page_number, scythes) {
+	$.get( "/harvestrs/page_number", function( data ) {
 	  $( "#content" ).fadeOut(100, function() {
 	  	$( "#content" ).html( data ).fadeIn(100)
 	  });
@@ -146,6 +146,17 @@ $(window).on('DOMContentLoaded load resize scroll', function() {
 		})
 	}
 ); 
+
+$(document).on('click', '.hamburger', function() {
+		$('.settings').show("slide", { direction: "left" }, 1000);
+	}
+);
+
+$(document).on('click', '.close', function() {
+		$('.settings').hide("slide", { direction: "left" }, 1000);
+	}
+);
+
 
 
 console.log('Only sick music makes money today.')

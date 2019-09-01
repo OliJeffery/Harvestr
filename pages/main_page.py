@@ -51,6 +51,7 @@ class HTMLPage:
 		print(f'CREATED NEW PLAYLIST: {self.playlist_id}')
 
 	def render_page(self, page_number=1):
+		scythes = ['pitchfork','the_quietus']
 		if self.logged_in:
 			header = open('pages/static/header.html').read()
 			try:
@@ -59,14 +60,14 @@ class HTMLPage:
 				profile_image = '/img/generic_profile.jpg'
 			profile_pic = """
 							<div class='profile'>
-		  						<img class='profile_pic' alt='{}' src='{}' />
+		  						<img class='profile_pic' alt='{}' src='{}' data-profile-id='{}' />
 		  					</div>
-		  				  """.format(self.profile['display_name'],profile_image)
+		  				  """.format(self.profile['display_name'], profile_image, self.profile['id'])
 			footer = open('pages/static/footer.html').read()
 			html = f"""
 				{profile_pic}
 				<section id="content" data-starting-page-number="{page_number}">
-					<h2>Fetching latest reviews from Pitchfork.</h2>
+					<h2>Fetching latest reviews from {' / '.join(scythes)}.</h2>
 				</section>
 			"""
 			today = datetime.today().strftime('%Y-%m-%d')

@@ -9,6 +9,7 @@ import pages
 import requests
 from sql_test import connection_test
 import json
+import scythes
 
 app = Flask(__name__)
 
@@ -27,8 +28,8 @@ def specify_page(page_number):
 def html_files(filename):
 	return send_from_directory('pages/static/', filename)
 
-@app.route('/harvestrs/<path:scythe>/<path:page_number>')
-def preview_albums(scythe, page_number):
+@app.route('/harvestrs/<path:page_number>')
+def preview_albums(page_number):
 	return pages.album_harvestr.AlbumHarvestr().harvest(page_number)
 
 @app.route('/album/<path:album_name>/<path:artists>')
@@ -68,7 +69,6 @@ def refresh_callback():
 	expiration = token_info['expires_in']
 	referrer = params.cookies['referrer']
 	response = make_response(user.redirect_to(referrer))
-	#response = make_response()
 	response.set_cookie('access_token', access_token)
 	response.set_cookie('expiration', str(expiration))
 	return response

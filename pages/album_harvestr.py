@@ -1,8 +1,6 @@
-from scythes.pitchfork import Pitchfork
-
 class AlbumHarvestr:
 
-	def __init__(self, scythe = Pitchfork()):
+	def __init__(self, scythe):
 		self.scythe = scythe
 
 	def harvest(self, page_number, harvest=False):
@@ -21,7 +19,7 @@ class AlbumHarvestr:
 			"""			
 			for album in self.albums:
 				html += f"""<div class='album' data-album-name='{album['album_name']}' data-artists='{' & '.join(album['artists'])}' >
-							{album['album_cover'][0]}
+							{album['album_cover']}
 							<b>{album['album_name']}</b> by <b>{' & '.join(album['artists'])}</b> 
 						</div>"""
 			html+=f"""

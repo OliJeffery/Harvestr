@@ -28,6 +28,6 @@ class Pitchfork:
 			for artist in artists:
 				spotify_info['artists'].append(artist.get_text())
 			spotify_info['album_name'] = album.select('.review__title-album')[0].get_text()
-			spotify_info['album_cover'] = album.select('.review__artwork img')
+			spotify_info['album_cover'] = album.select('.review__artwork img')[0]
 			returned_albums.append(spotify_info)
 		return returned_albums
